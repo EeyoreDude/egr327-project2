@@ -11,12 +11,9 @@ import java.util.ArrayList;
 @RestController
 public class MyTasks {
 
-    private final CentersHolder holder;
 
     @Autowired
-    public MyTasks(CentersHolder holder){
-        this.holder = holder;
-    }
+    public VehicleDao vehicleDao;
 
     RestTemplate restTemplate = new RestTemplate();
 
@@ -32,17 +29,18 @@ public class MyTasks {
         restTemplate.postForObject("http://localhost:8080/addVehicle", new Vehicle(make, model, year, isFourWheel, price, mpg), Vehicle.class);
     }
 
-    @Scheduled(fixedRate = 1500)
+    @Scheduled(fixedRate = 1100)
     public void deleteVehicle(){
-        int randomID = (int) (Math.random() * ( - 1) + 1);
+        int randomID = (int) (Math.random() * (vehicleDao.greatestId() - 1) + 1);
+        System.out.println("Deleted: " + randomID);
         restTemplate.delete("http://localhost:8080/deleteVehicle/" + randomID);
     }
 
     @Scheduled(fixedRate  = 3000)
     public void updateVehicle(){
-        int randomID = (int) (Math.random() * (holder.vehicleDao.greatestId() - 1) + 1);
-        Vehicle updatedVehicle = new Vehicle("Cool", "Car", 2001, true, 20, 100);
-
+        int randomID = (int) (Math.random() * (vehicleDao.greatestId() - 1) + 1);
+        System.out.println("Updated: " + randomID);
+        Vehicle updatedVehicle = new Vehicle(randomID, "Cool", "Car", 2001, true, 20, 100);
         restTemplate.put("http://localhost:8080/updateVehicle", updatedVehicle);
 
         restTemplate.getForObject("http://localhost:8080/getVehicle/" + randomID, Vehicle.class);

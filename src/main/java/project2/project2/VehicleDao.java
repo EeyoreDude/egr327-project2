@@ -55,7 +55,7 @@ public class VehicleDao {
         return latestVehicles;
     }
 
-    public Integer greatestId(){
-        return entityManager.createQuery("select id from Vehicle order by id desc", Integer.class).getFirstResult();
+    public int greatestId(){
+        return entityManager.createQuery("SELECT id FROM Vehicle WHERE id = ( SELECT MAX(id) FROM Vehicle )", Integer.class).getSingleResult();
     }
 }

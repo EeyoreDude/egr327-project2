@@ -10,22 +10,19 @@ import java.util.List;
 @RestController
 public class DealerController {
 
-    private final CentersHolder holder;
-
     @Autowired
-    public DealerController(CentersHolder holder){
-        this.holder = holder;
-    }
+    public VehicleDao vehicleDao;
+
 
     @RequestMapping(value = "/addVehicle", method = RequestMethod.POST)
     public Vehicle addVehicle(@RequestBody Vehicle newVehicle) {
-        holder.vehicleDao.create(newVehicle);
+        vehicleDao.create(newVehicle);
         return newVehicle;
     }
 
     @RequestMapping(value = "/getVehicle/{id}", method = RequestMethod.GET)
     public Vehicle getVehicle(@PathVariable("id") int id) {
-        return holder.vehicleDao.getById(id);
+        return vehicleDao.getById(id);
     }
 
     @RequestMapping(value = "/updateVehicle", method = RequestMethod.PUT)
@@ -33,13 +30,13 @@ public class DealerController {
         if(updatedVehicle.getId() < 0) {
             throw new IllegalArgumentException("Please provide an ID");
         }
-        return holder.vehicleDao.update(updatedVehicle);
+        return vehicleDao.update(updatedVehicle);
     }
 
     @RequestMapping(value = "/deleteVehicle/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteVehicle(@PathVariable("id") int id) {
         try {
-            holder.vehicleDao.delete(id);
+            vehicleDao.delete(id);
         } catch (IllegalArgumentException e){
             return new ResponseEntity<>("No vehicle with id " + id, HttpStatus.BAD_REQUEST);
         }
@@ -49,7 +46,7 @@ public class DealerController {
 
     @RequestMapping(value = "/getLatestVehicles", method = RequestMethod.GET)
     public List<Vehicle> getLatestVehicles() {
-        return holder.vehicleDao.getLatest();
+        return vehicleDao.getLatest();
     }
 
 
