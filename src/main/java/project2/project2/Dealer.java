@@ -6,10 +6,10 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.springframework.util.SerializationUtils;
 
-import java.util.Scanner;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
@@ -83,8 +83,7 @@ public class Dealer implements Serializable {
                 boolean lineArray3 = lineArray[3].contains("TRUE");
 
                 // split the first string in the array by spaces to separate the make and model
-                inventoryList.add(new Vehicle(  id++,
-                                                lineArray[0].split(" ", 2)[0],
+                inventoryList.add(new Vehicle(  lineArray[0].split(" ", 2)[0],
                                                 lineArray[0].split(" ", 2)[1],
                                                 parseInt(lineArray[1]),
                                                 lineArray3,

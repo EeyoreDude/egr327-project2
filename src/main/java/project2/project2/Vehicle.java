@@ -1,8 +1,15 @@
 package project2.project2;
 
+import javax.persistence.*;
 import java.io.*;
 
+@Entity
+@Table(name = "inventory")
 public class Vehicle implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Serial
     private static final long serialVersionUID = 3883381334275202140L;
@@ -15,16 +22,17 @@ public class Vehicle implements Serializable {
     private int price;
     private int mpg;
 
-    private int id;
+
 
     /**
      * Vehicle class constructor, takes in and initializes all sub values
-     * @param make - the make of the vehicle (i.e. Ford, Kia)
-     * @param model - the model of the vehicle (i.e. F-150, Optima)
-     * @param year - the year of the model (2007, 2015)
+     *
+     * @param make        - the make of the vehicle (i.e. Ford, Kia)
+     * @param model       - the model of the vehicle (i.e. F-150, Optima)
+     * @param year        - the year of the model (2007, 2015)
      * @param isFourWheel - whether the vehicle is four-wheel drive, as a boolean value
-     * @param price - the price of the vehicle as an integer
-     * @param mpg - the miles per gallon of the vehicle as an integer
+     * @param price       - the price of the vehicle as an integer
+     * @param mpg         - the miles per gallon of the vehicle as an integer
      */
 
     public Vehicle(String make, String model, int year, boolean isFourWheel, int price, int mpg) {
@@ -34,18 +42,19 @@ public class Vehicle implements Serializable {
         this.isFourWheel = isFourWheel;
         this.price = price;
         this.mpg = mpg;
-        this.id = 0;
+        this.id = -1;
     }
 
     /**
      * Vehicle constructor that also contains id value
-     * @param id - the id of the vehicle in the rest api
-     * @param make - the make of the vehicle (i.e. Ford, Kia)
-     * @param model - the model of the vehicle (i.e. F-150, Optima)
-     * @param year - the year of the model (2007, 2015)
+     *
+     * @param id          - the id of the vehicle in the rest api
+     * @param make        - the make of the vehicle (i.e. Ford, Kia)
+     * @param model       - the model of the vehicle (i.e. F-150, Optima)
+     * @param year        - the year of the model (2007, 2015)
      * @param isFourWheel - whether the vehicle is four-wheel drive, as a boolean value
-     * @param price - the price of the vehicle as an integer
-     * @param mpg - the miles per gallon of the vehicle as an integer
+     * @param price       - the price of the vehicle as an integer
+     * @param mpg         - the miles per gallon of the vehicle as an integer
      */
     public Vehicle(int id, String make, String model, int year, boolean isFourWheel, int price, int mpg) {
         this.id = id;
@@ -57,7 +66,7 @@ public class Vehicle implements Serializable {
         this.mpg = mpg;
     }
 
-    public Vehicle(Vehicle other){
+    public Vehicle(Vehicle other) {
         this.make = other.make;
         this.model = other.model;
         this.year = other.year;
@@ -67,7 +76,7 @@ public class Vehicle implements Serializable {
         this.id = other.id;
     }
 
-    public Vehicle(Vehicle other, int id){
+    public Vehicle(Vehicle other, int id) {
         this.make = other.make;
         this.model = other.model;
         this.year = other.year;
@@ -77,12 +86,13 @@ public class Vehicle implements Serializable {
         this.id = id;
     }
 
-    public Vehicle(){
-        id = 0;
+    public Vehicle() {
+        this.id = -1;
     }
 
     /**
      * Getter for make
+     *
      * @return make string
      */
     public String getMake() {
@@ -91,6 +101,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Setter for make
+     *
      * @param make - the make of the vehicle (i.e. Ford, Kia)
      */
     public void setMake(String make) {
@@ -99,6 +110,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Getter for model
+     *
      * @return model string
      */
     public String getModel() {
@@ -107,6 +119,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Setter for model
+     *
      * @param model - the model of the vehicle (i.e. F-150, Optima)
      */
     public void setModel(String model) {
@@ -115,6 +128,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Getter for year
+     *
      * @return year int
      */
     public int getYear() {
@@ -123,14 +137,16 @@ public class Vehicle implements Serializable {
 
     /**
      * Setter for id
+     *
      * @return - the id of the vehicle in the rest api
      */
-    public int getId(){
+    public int getId() {
         return id;
     }
 
     /**
      * Setter for year
+     *
      * @param year - the year of the model (2007, 2015)
      */
     public void setYear(int year) {
@@ -139,6 +155,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Getter for fourWheel
+     *
      * @return fourWheel boolean
      */
     public boolean getIsFourWheel() {
@@ -147,6 +164,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Setter for fourWheel
+     *
      * @param isFourWheel - whether the vehicle is four-wheel drive, as a boolean value
      */
     public void setIsFourWheel(boolean isFourWheel) {
@@ -155,6 +173,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Getter for price
+     *
      * @return price int
      */
     public int getPrice() {
@@ -163,6 +182,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Setter for price
+     *
      * @param price - the price of the vehicle as an integer
      */
     public void setPrice(int price) {
@@ -171,6 +191,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Getter for mpg
+     *
      * @return mpg int
      */
     public int getMpg() {
@@ -179,6 +200,7 @@ public class Vehicle implements Serializable {
 
     /**
      * Setter for mpg
+     *
      * @param mpg - the miles per gallon of the vehicle as an integer
      */
     public void setMpg(int mpg) {
@@ -187,9 +209,10 @@ public class Vehicle implements Serializable {
 
     /**
      * Setter for id
+     *
      * @param id - the id of the vehicle in the rest api
      */
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -202,17 +225,18 @@ public class Vehicle implements Serializable {
     /**
      * Print method
      * Outputs text to console
-     *
+     * <p>
      * Output is as follows:
-     *
+     * <p>
      * Year Make Model
      * Is Four-Wheel Drive
      * Price
      * MPG
+     *
      * @return printed string
      */
     @Override
-    public String toString(){
+    public String toString() {
         return "{" +
                 "\"id\": \"" + id + "\", " +
                 "\"make\": \"" + make + "\", " +

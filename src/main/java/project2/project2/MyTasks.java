@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class MyTasks {
 
     private final CentersHolder holder;
+
     @Autowired
     public MyTasks(CentersHolder holder){
         this.holder = holder;
@@ -33,14 +34,14 @@ public class MyTasks {
 
     @Scheduled(fixedRate = 1500)
     public void deleteVehicle(){
-        int randomID = (int) (Math.random() * (holder.globalId - 1) + 1);
+        int randomID = (int) (Math.random() * ( - 1) + 1);
         restTemplate.delete("http://localhost:8080/deleteVehicle/" + randomID);
     }
 
     @Scheduled(fixedRate  = 3000)
     public void updateVehicle(){
-        int randomID = (int) (Math.random() * (holder.globalId - 1) + 1);
-        Vehicle updatedVehicle = new Vehicle(randomID, "Cool", "Car", 2001, true, 20, 100);
+        int randomID = (int) (Math.random() * (holder.vehicleDao.greatestId() - 1) + 1);
+        Vehicle updatedVehicle = new Vehicle("Cool", "Car", 2001, true, 20, 100);
 
         restTemplate.put("http://localhost:8080/updateVehicle", updatedVehicle);
 
